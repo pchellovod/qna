@@ -7,19 +7,21 @@ feature 'View questions', %q{
 } do
 
   scenario 'User view questions' do
-    questions = create_list(:question, 2)
+    questions = create_list(:question, 5)
     visit questions_path
-    expect(page).to have_content questions.first.title
-    expect(page).to have_content questions.second.title
+    questions.each do |question|
+      expect(page).to have_content question.title
+    end
   end
 
   scenario 'User view question and answers to it' do
     question = create(:question)
-    answers = create_list(:answer, 2, question: question)
+    answers = create_list(:answer, 5, question: question)
     visit question_path(question)
     expect(page).to have_content question.title
     expect(page).to have_content question.body
-    expect(page).to have_content answers.first.body
-    expect(page).to have_content answers.second.body
+    answers.each do |answer|
+      expect(page).to have_content answer.body
+    end
   end
 end
