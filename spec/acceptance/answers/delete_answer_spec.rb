@@ -12,6 +12,7 @@ feature 'Delete answer', %q{
     sign_in(user)
     answer = create(:answer, user: user, question: question)
     visit question_path(question)
+    expect(page).to have_content answer.body
     click_on 'Delete answer'
     expect(page).to have_content 'Answer was successfully destroyed.'
     expect(page).to_not have_content answer.body

@@ -6,13 +6,16 @@ class AnswersController < ApplicationController
     @answer = Answer.new
   end
 
+  def show
+    @answer = @question.answers.new
+  end
+
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     if @answer.save
       redirect_to @question, notice: 'Your answer successfully created.'
     else
-      flash[:alert] = "Not the correct answer data!"
       render 'questions/show'
     end
   end

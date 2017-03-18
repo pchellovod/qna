@@ -19,7 +19,6 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: 'Your question successfully created.'
     else
-      flash[:alert] = 'Not the correct question data!'
       render :new
     end
   end

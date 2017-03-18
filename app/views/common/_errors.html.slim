@@ -1,0 +1,3 @@
+- if @question.answers.build.errors.any?
+    - @question.answers.errors.full_messages.each do |msg|
+      = msg

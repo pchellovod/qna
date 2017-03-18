@@ -24,7 +24,8 @@ feature 'Create answer', %q{
     visit question_path(question)
     fill_in 'Body', with: ''
     click_on 'Add new answer'
-    expect(page).to have_content "Not the correct answer data"
+    expect(page).to have_content t('errors.messages.blank')
+    #expect(page).to have_content "Not the correct answer data"
   end
 
   scenario 'Non-authenticated user try to creates qiestion' do
