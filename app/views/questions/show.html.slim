@@ -1,16 +1,47 @@
-h2 = @question.title
-div = @question.body
-- if user_signed_in? && current_user.author?(@question)
-    div
-      = link_to 'Delete question', @question, method: :delete
+/ h2 = @question.title
+/ div = @question.body
+/ - if user_signed_in? && current_user.author?(@question)
+/     div
+/       = link_to 'Delete question', @question, method: :delete
 
-- @question.answers.each do |answer|
+/ - @question.answers.each do |answer|
+/     - if answer.persisted?
+/         .answer
+/           = answer.body
+/         - if user_signed_in? && current_user.author?(answer)
+/             .delete
+/               = link_to 'Delete answer', answer, method: :delete
+
+/ div class="form_add_answer"
+/ = render 'answers/form', question: @question
+
+/ p = link_to 'Back', questions_path
+
+
+
+
+div
+  h2 = @question.title
+  = link_to 'Delete question', @question, method: :delete
+div
+  p = @question.body
+  br
+
+  - @question.answers.each do |answer|
     - if answer.persisted?
-        .answer
-          = answer.body
+      div
+        p = answer.body
         - if user_signed_in? && current_user.author?(answer)
-            .delete
-              = link_to 'Delete answer', answer, method: :delete
+          = link_to 'Delete answer', answer, method: :delete
 
-div class="form_add_answer"
-= render 'answers/form', question: @question
+div
+br
+  - if user_signed_in?
+    = form_for([@question, @question.answers.build]) do |f|
+      - if @answer.nil? != true
+        = render 'common/errors', resource: @answer
+      = f.label :body
+      = f.text_area :body
+      = f.submit 'Submit'
+
+p = link_to 'Back', questions_path
