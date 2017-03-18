@@ -19,22 +19,22 @@
 
 
 
+h2 = @question.title
+div = @question.body
+- if user_signed_in? && current_user.author?(@question)
+    div
+      = link_to 'Delete question', @question, method: :delete
 
-div
-  h2 = @question.title
-  = link_to 'Delete question', @question, method: :delete
-div
-  p = @question.body
-  br
 
-  - @question.answers.each do |answer|
-    - if answer.persisted?
+
+- @question.answers.each do |answer|
+  - if answer.persisted?
+    div
+      p = answer.body
+      - if user_signed_in? && current_user.author?(answer)
+        = link_to 'Delete answer', answer, method: :delete
+
       div
-        p = answer.body
-        - if user_signed_in? && current_user.author?(answer)
-          = link_to 'Delete answer', answer, method: :delete
-
-div
 br
   - if user_signed_in?
     = form_for([@question, @question.answers.build]) do |f|
@@ -42,6 +42,12 @@ br
         = render 'common/errors', resource: @answer
       = f.label :body
       = f.text_area :body
-      = f.submit 'Submit'
+      = f.submit 'Add new answer'
+        = f.label :body
+        br
+        = f.text_area :body
+        br
+        = f.submit 'Add new answer'
+
 
 p = link_to 'Back', questions_path

@@ -24,14 +24,13 @@ feature 'Create answer', %q{
     visit question_path(question)
     fill_in 'Body', with: ''
     click_on 'Add new answer'
-    expect(page).to have_content t('errors.messages.blank')
+    expect(page).to have_content "Body can't be blank"
     #expect(page).to have_content "Not the correct answer data"
   end
 
-  scenario 'Non-authenticated user try to creates qiestion' do
-    visit question_path(question)
-    fill_in 'Body', with: 'My answer text'
-    click_on 'Add new answer'
+  scenario 'Non-authenticated user try to creates question' do
+    visit root_path
+    click_on 'Ask question'
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 
