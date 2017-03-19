@@ -12,6 +12,7 @@ feature 'Delete question', %q{
   scenario 'Authenticate user remove question' do
     sign_in(user)
     visit question_path(question)
+    expect(page).to have_content question.title
     click_on 'Delete question'
     expect(page).to have_content 'Question was successfully deleted'
     expect(page).to_not have_content question.title
