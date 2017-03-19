@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
       user = create(:user, id: user_id)
       entity = double('Entity')
       allow(entity).to receive_messages(user_id: user_id)
-      expect(user.author?(entity)).to be_truthy
+      expect(user).to be_author(entity)
     end
 
     it 'returns false' do

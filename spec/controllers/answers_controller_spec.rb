@@ -28,7 +28,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'answer belongs to the user' do
         post :create, params: { question_id: question, answer: attributes_for(:answer) }
-        expect(Answer.last.user).to eq @user
+        expect(assigns(:answer).user_id).to eq @user.id
       end
 
 

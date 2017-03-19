@@ -24,8 +24,7 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
     if current_user.author?(@answer)
       @answer.destroy
-      flash[:notice] = 'Answer was successfully destroyed.'
-      redirect_to @answer.question
+      redirect_to @answer.question, notice: 'Answer was successfully destroyed.'
     else
       flash[:alert] = 'You can not remove an answer!'
       @question = @answer.question

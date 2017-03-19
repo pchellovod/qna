@@ -16,4 +16,15 @@ feature 'User sign up', %q{
     expect(page).to have_content 'Welcome! You have signed up successfully.'
     expect(current_path).to eq root_path
   end
+
+  scenario 'Guest user try to sign up with invalid data' do
+    visit root_path
+    click_link 'Sign up'
+    fill_in 'Email', with: ''
+    fill_in 'Password', with: ''
+    fill_in 'Password confirmation', with: ''
+    click_button 'Sign up'
+    expect(page).to have_content "Email can't be blank"
+    expect(page).to have_content "Password can't be blank"
+  end
 end
