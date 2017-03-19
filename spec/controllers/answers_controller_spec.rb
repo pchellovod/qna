@@ -4,17 +4,17 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question) }
 
-  describe 'GET #new' do
-    before { get :new, params: { question_id: question } }
+  # describe 'GET #new' do
+  #   before { get :new, params: { question_id: question } }
 
-    it 'assings a new Answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
+  #   it 'assings a new Answer to @answer' do
+  #     expect(assigns(:answer)).to be_a_new(Answer)
+  #   end
 
-    it 'renders new view' do
-      expect(response).to render_template :new
-    end
-  end
+  #   it 'renders new view' do
+  #     expect(response).to render_template :new
+  #   end
+  # end
 
   describe 'POST #create' do
     sign_in_user
@@ -80,7 +80,6 @@ RSpec.describe AnswersController, type: :controller do
         it 're-renders question view' do
           delete :destroy, params: { id: another_answer }
           expect(response).to render_template 'questions/show'
-          expect(response.body).to match another_answer.body
         end
       end
     end

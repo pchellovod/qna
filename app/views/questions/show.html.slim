@@ -38,7 +38,7 @@ div = @question.body
 br
   - if user_signed_in?
     = form_for([@question, @question.answers.build]) do |f|
-      - if @answer.nil? != true
+      - if @answer
         = render 'common/errors', resource: @answer
       = f.label :body
       = f.text_area :body

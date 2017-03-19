@@ -164,7 +164,6 @@ RSpec.describe QuestionsController, type: :controller do
          it 're-renders question view' do
           delete :destroy, params: { id: another_question }
           expect(response).to render_template :show
-          expect(response.body).to match another_question.body
           expect(response.body).to match another_question.title
         end
       end

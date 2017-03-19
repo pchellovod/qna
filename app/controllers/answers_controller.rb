@@ -2,10 +2,6 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   before_action :set_question, only: [:create]
 
-  def new
-    @answer = Answer.new
-  end
-
   def show
     @answer = @question.answers.new
   end

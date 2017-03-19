@@ -12,21 +12,16 @@ RSpec.describe User, type: :model do
   end
 
   describe '#author?' do
-    it 'returns true' do
-      user_id = rand(1..100)
-      user = create(:user, id: user_id)
-      entity = double('Entity')
-      allow(entity).to receive_messages(user_id: user_id)
-      expect(user).to be_author(entity)
+    let(:user) { create(:user) }
+    let(:new_user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+
+    it 'author' do
+      expect(user).to be_author(question)
     end
 
-    it 'returns false' do
-      user_id = rand(1..100)
-      other_id = rand(200..300)
-      user = create(:user, id: user_id)
-      entity = double('Entity')
-      allow(entity).to receive_messages(user_id: other_id)
-      expect(user.author?(entity)).to be_falsey
+    it 'is not author' do
+      expect(new_user).to_not be_author(question)
     end
   end
 end
