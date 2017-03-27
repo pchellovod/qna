@@ -40,6 +40,9 @@ gem 'slim-rails'
 gem 'devise'
 gem 'launchy'
 gem 'simplecov', :require => false
+gem 'database_cleaner'
+gem 'selenium-webdriver'
+gem 'capybara-webkit'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
