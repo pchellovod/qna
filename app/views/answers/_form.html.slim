@@ -2,6 +2,7 @@
   / = render 'common/errors', resource: @answer
   = f.label :body
   br
+  .answer-errors
   = f.text_area :body
   br
   = f.submit 'Add new answer'

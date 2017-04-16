@@ -41,8 +41,7 @@ gem 'devise'
 gem 'launchy'
 gem 'simplecov', :require => false
 gem 'database_cleaner'
-gem 'selenium-webdriver'
-gem 'capybara-webkit'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -50,6 +49,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails'
   gem 'spring'
+  gem 'capybara-webkit'
 end
 
 group :development do
