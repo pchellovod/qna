@@ -1,10 +1,5 @@
-h2 = @question.title
-div = @question.body
-- if user_signed_in? && current_user.author?(@question)
-    div
-      = link_to 'Delete question', @question, method: :delete
-
-
+.question
+  = render @question
 
 - @question.answers.each do |answer|
   - if answer.persisted?
