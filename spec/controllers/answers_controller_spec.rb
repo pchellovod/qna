@@ -4,17 +4,17 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
   let(:answer) { create(:answer, question: question) }
 
-  # describe 'GET #new' do
-  #   before { get :new, params: { question_id: question } }
+  describe 'GET #new' do
+    before { get :new, params: { question_id: question } }
 
-  #   it 'assings a new Answer to @answer' do
-  #     expect(assigns(:answer)).to be_a_new(Answer)
-  #   end
+    it 'assings a new Answer to @answer' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
 
-  #   it 'renders new view' do
-  #     expect(response).to render_template :new
-  #   end
-  # end
+    it 'renders new view' do
+      expect(response).to render_template :new
+    end
+  end
 
   describe 'POST #create' do
     sign_in_user
@@ -28,7 +28,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'answer belongs to the user' do
         post :create, params: { question_id: question, answer: attributes_for(:answer), format: :js }
-        expect(assigns(:answer).user_id).to eq @user.id
+        expect(Answer.last.user).to eq @user
       end
 
       it 'render create template' do
@@ -47,6 +47,67 @@ RSpec.describe AnswersController, type: :controller do
       it 'render create template' do
         post :create, params: { question_id: question, answer: attributes_for(:invalid_answer), format: :js }
         expect(response).to render_template :create
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    context 'Authenticated user' do
+      before { sign_in answer.user }
+
+      context 'with valid attributes' do
+        it 'assings the requested answer to @answer' do
+          patch :update, params: { id: answer, answer: attributes_for(:answer), format: :js }
+          expect(assigns(:answer)).to eq answer
+        end
+
+        it 'changes answer attributes' do
+          updated_body = 'new updated body'
+          patch :update, params: { id: answer, answer: { body: updated_body }, format: :js }
+          answer.reload
+          expect(answer.body).to eq updated_body
+        end
+
+        it 'render update template' do
+          patch :update, params: { id: answer, answer: attributes_for(:answer), format: :js }
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        let(:invalid_body) { 'short' }
+        before do
+          patch :update, params: { id: answer, answer: { body: invalid_body }, format: :js }
+        end
+
+        it 'does not update the answer' do
+          answer.reload
+          expect(answer.body).to_not eq invalid_body
+        end
+
+        it 'render update template' do
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'User is not author' do
+        let!(:another_user) { create(:user) }
+        let!(:another_answer) { create(:answer, user: another_user, question: question) }
+
+        it 'try update answer' do
+          updated_body = 'text updated others'
+          patch :update, params: { id: another_answer, answer: { body: updated_body }, format: :js }
+          expect(another_answer.body).to_not eq updated_body
+        end
+      end
+    end
+
+    context 'Non-authenticated user' do
+      it 'update answer' do
+        updated_body = 'updated body'
+        patch :update, params: { id: answer, answer: { body: updated_body }, format: :js }
+        answer.reload
+        expect(answer.body).to_not eq updated_body
       end
     end
   end
@@ -79,6 +140,7 @@ RSpec.describe AnswersController, type: :controller do
         it 're-renders question view' do
           delete :destroy, params: { id: another_answer }
           expect(response).to render_template 'questions/show'
+          expect(response.body).to match another_answer.body
         end
       end
     end
