@@ -1,6 +1,13 @@
 - if answer.persisted?
-    .answer
+    div class=["answer", "answer-#{answer.id}"]
+      .answer-best
+        - if answer.best?
+            b Answer best
+        - elsif user_signed_in? && current_user.author?(answer.question)
+          = link_to 'Mark best', mark_best_answer_path(answer), method: :patch, remote: true
+
       = answer.body
       - if user_signed_in? && current_user.author?(answer)
+          = render 'answers/form_edit', answer: answer
           .delete
-            = link_to 'Delete answer', answer, method: :delete
+= link_to 'Delete answer', answer, method: :delete, data: { confirm: 'The answer will be deleted. You are sure?' }, remote: true

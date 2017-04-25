@@ -1,3 +1,10 @@
 p =link_to question.title, @question
   -if user_signed_in? && current_user.author?(question)
-
+h2 = @question.title
+div = @question.body
+- if user_signed_in? && current_user.author?(@question)
+    div
+      = link_to 'Edit', '', class: 'edit-question-link'
+      = render 'form_edit', question: @question
+    div
+      = link_to 'Delete question', @question, method: :delete
