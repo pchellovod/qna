@@ -5,16 +5,11 @@ class Answer < ApplicationRecord
   validates :body, presence: true, length: { minimum: 10 }
 
   scope :first_best, -> { order('best DESC') }
-  
+
   def mark_best
-    reset_best
-    self.update(best: true)
+    ActiveRecord::Base.transaction do
+      question.answers.where(best: true).find_each { |answer| answer.update!(best: false) }
+      update!(best: true)
+    end
   end
-
-  private
-
-  def reset_best
-    self.question.answers.update_all(best: false)
-  end
-
 end
