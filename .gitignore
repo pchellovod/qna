@@ -19,3 +19,4 @@
 coverage
 config/database.yml
 .idea
+/public/uploads
