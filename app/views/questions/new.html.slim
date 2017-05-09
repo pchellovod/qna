@@ -6,12 +6,7 @@
   br
   = f.label :body
   = f.text_area :body
-  div
-    | Attachments:
-    div
-      = f.fields_for :attachments do |a|
-        = a.label :file
-        = a.file_field :file
+  = render 'attachments/form', f: f
   = f.submit 'Create'
 
 p = link_to 'Back', questions_path
