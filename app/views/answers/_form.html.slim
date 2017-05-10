@@ -1,8 +1,9 @@
-= form_for [question, question.answers.build], remote: true do |f|
+= form_for [question, @answer], remote: true do |f|
   / = render 'common/errors', resource: @answer
   = f.label :body
   br
   .answer-errors
   = f.text_area :body
   br
+  = render 'attachments/form', f: f
   = f.submit 'Add new answer'

@@ -6,6 +6,7 @@
   br
   = f.label :body
   = f.text_area :body
+  = render 'attachments/form', f: f
   = f.submit 'Create'
 
 p = link_to 'Back', questions_path
