@@ -19,4 +19,6 @@
 coverage
 config/database.yml
 .idea
+.env
 /public/uploads
+/db/test.sqlite3
