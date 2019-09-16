@@ -1,15 +1,15 @@
-FactoryGirl.define do
+FactoryBot.define do
   sequence :body do |n|
     "Answer #{n} text"
   end
 
   factory :answer do
     body
-    question nil
+    question { nil }
     user
   end
 
   factory :invalid_answer, class: 'Answer' do
-    body nil
+    body { nil }
   end
 end
