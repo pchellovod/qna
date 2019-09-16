@@ -69,5 +69,7 @@ group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'rails-controller-testing'
   gem 'capybara'
+  gem 'capybara-selenium'
+  gem 'cucumber-rails'
   gem 'fuubar'
 end
