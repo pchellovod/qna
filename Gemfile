@@ -70,6 +70,6 @@ group :test do
   gem 'rails-controller-testing'
   gem 'capybara'
   gem 'capybara-selenium'
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', require: false
   gem 'fuubar'
 end
