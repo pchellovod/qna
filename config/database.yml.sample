@@ -7,12 +7,12 @@ default: &default
 
 development:
   <<: *default
-  database: qa_dev
+  database: qna_dev
   username: <%= ENV['PG_USER'] %>
   password: <%= ENV['PG_PASSWORD'] %>
 
 test:
   <<: *default
-  database: qa_test
+  database: qna_test
   username: <%= ENV['PG_USER'] %>
   password: <%= ENV['PG_PASSWORD'] %>
